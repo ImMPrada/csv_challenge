@@ -1,3 +1,54 @@
+# CSV Challenge Backend
+
+API REST en Rails para procesar archivos CSV de gran tamaño de forma asíncrona.
+
+## Requisitos previos
+
+- Ruby 3.2.2
+- PostgreSQL
+- Bundler
+
+## Configuración inicial
+
+1. Clonar el repositorio
+```bash
+git clone [url-del-repositorio]
+cd csv_challenge/backend
+```
+
+2. Instalar dependencias
+```bash
+bundle install
+```
+
+3. Configurar la base de datos
+```bash
+rails db:create
+rails db:migrate
+```
+
+4. Configurar Active Storage
+```bash
+rails active_storage:install
+rails db:migrate
+```
+
+## Ejecutar la aplicación
+
+1. Iniciar el servidor Rails
+```bash
+rails server
+```
+
+2. Iniciar el worker de Solid Queue (en una nueva terminal)
+```bash
+rails solid_queue:start
+```
+
+## Endpoints API
+
+### Subir un archivo CSV
+
 # Flatirons Full-Stack Developer Coding Test
 
 Be sure to read **all** of this document carefully, and follow the guidelines within.
