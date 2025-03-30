@@ -7,12 +7,10 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins '*' # En producción, especifica los dominios permitidos
-
+    origins 'http://localhost:3000' # Ajusta esto a tu dominio frontend
     resource '*',
              headers: :any,
              methods: %i[get post put patch delete options head],
-             expose: %w[Content-Range Content-Length],
-             max_age: 600
+             credentials: true
   end
 end

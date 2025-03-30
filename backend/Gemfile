@@ -48,4 +48,4 @@ group :development, :test do
   gem 'rubocop-rails-omakase'
 end
 
-gem "byebug", "~> 12.0"
+gem 'byebug', '~> 12.0'
