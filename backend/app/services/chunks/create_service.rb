@@ -48,7 +48,7 @@ module Chunks
     end
 
     def all_chunks_received?
-      chunks.count == total_chunks
+      chunk_number == total_chunks
     end
 
     def create_csv_upload!
