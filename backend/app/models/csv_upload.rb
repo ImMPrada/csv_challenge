@@ -1,10 +1,8 @@
 class CsvUpload < ApplicationRecord
   enum :status, { pending: 0, processing: 1, completed: 2, failed: 3 }
 
-  has_one_attached :file
+  has_many :file_chunks, dependent: :destroy
 
-  validates :file, presence: true
-  validates :filename, presence: true
   validates :total_rows, numericality: { greater_than_or_equal_to: 0 }
   validates :processed_rows, numericality: { greater_than_or_equal_to: 0 }
   validates :failed_rows, numericality: { greater_than_or_equal_to: 0 }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_29_224336) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_30_113526) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -40,7 +40,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_29_224336) do
   end
 
   create_table "csv_uploads", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "filename", null: false
     t.integer "status", null: false
     t.text "error_message"
     t.integer "total_rows", null: false
@@ -50,6 +49,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_29_224336) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "file_chunks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "identifier", null: false
+    t.integer "chunk_number", null: false
+    t.integer "total_chunks", null: false
+    t.boolean "processed", default: false
+    t.bigint "csv_upload_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["csv_upload_id"], name: "index_file_chunks_on_csv_upload_id"
+    t.index ["identifier", "chunk_number"], name: "index_file_chunks_on_identifier_and_chunk_number", unique: true
+    t.index ["identifier"], name: "index_file_chunks_on_identifier"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "file_chunks", "csv_uploads"
 end
