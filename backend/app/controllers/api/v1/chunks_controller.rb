@@ -6,8 +6,8 @@ module Api
         service.call!
 
         @status = service.status
-        process_csv if @status == :complete
         @csv_upload = service.csv_upload
+        process_csv(service.csv_upload) if @status == :complete
       rescue StandardError => e
         render json: { error: e.message }, status: :unprocessable_entity
       end
@@ -18,8 +18,8 @@ module Api
         params.require(:chunk).permit(:chunk_data, :chunk_number, :total_chunks, :identifier)
       end
 
-      def process_csv
-        ProcessCsvJob.perform_later(@csv_upload.id)
+      def process_csv(csv_upload)
+        ProcessCsvJob.perform_later(csv_upload.id)
       end
     end
   end
