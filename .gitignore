@@ -21,6 +21,13 @@
 
 # Ignore master key for decrypting credentials and more.
 /backend/config/master.key
+
+# Ignore logs
+/backend/log/*
+!/backend/log/.keep
+/backend/.byebug_history
+
+
 # Logs
 /frontend/logs
 /frontend/*.log
