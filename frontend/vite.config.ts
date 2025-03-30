@@ -6,4 +6,12 @@ export default defineConfig({
   plugins: [
     react(),
   ],
+  server: {
+    proxy: {
+      '/cable': {
+        target: 'ws://localhost:3000',
+        ws: true
+      }
+    }
+  }
 })

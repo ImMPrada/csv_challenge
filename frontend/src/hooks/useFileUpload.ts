@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react'
 
 interface UseFileUploadProps {
-  onUploadComplete?: (response: Record<string, unknown>) => void
+  onUploadComplete?: (response: { status: string; csvUpload?: { id: number; status: string; created_at: string } }) => void
   onUploadError?: (error: Error) => void
   onProgress?: (progress: number) => void
 }
@@ -122,6 +122,7 @@ export function useFileUpload({ onUploadComplete, onUploadError, onProgress }: U
         const response = await fetch(ENDPOINT, {
           method: 'POST',
           body: formData,
+          credentials: 'include',
           headers: {
             'X-CSRF-Token': document.querySelector<HTMLMetaElement>('[name="csrf-token"]')?.getAttribute('content') || ''
           }
