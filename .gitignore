@@ -35,6 +35,8 @@
 /frontend/dist-ssr
 /frontend/*.local
 
+/frontend/.vite
+
 # Editor directories and files
 /frontend/.vscode/*
 !.vscode/extensions.json
