@@ -11,6 +11,8 @@ module CsvUploads
 
       csv_upload.file_chunks << chunks
       csv_upload.save!
+
+      csv_upload
     end
 
     private
