@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useFileUpload } from '../../hooks/useFileUpload'
+import { useFileUpload } from '../../hooks/use-file-upload/useFileUpload'
 import ProgressBar from '../progress-bar'
 import FileInput from './file-input'
 
@@ -7,19 +7,16 @@ export default function FileUploader() {
   const [error, setError] = useState<string | null>(null)
   const [uploadProgress, setUploadProgress] = useState<number>(0)
   const { uploadFile, isUploading } = useFileUpload({
-    onUploadComplete: (result) => {
+    onUploadComplete: () => {
       setError(null)
       setUploadProgress(100)
-      console.log('Upload complete:', result)
     },
     onUploadError: (error) => {
       setError(error.message)
       setUploadProgress(0)
-      console.error('Upload error:', error)
     },
     onProgress: (progress) => {
       setUploadProgress(progress)
-      console.log(`Upload progress: ${progress.toFixed(2)}%`)
     }
   })
 
