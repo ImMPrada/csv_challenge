@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useFileUpload } from '../../hooks/useFileUpload'
+import ProgressBar from '../progress-bar'
 
 export default function FileUploader() {
   const [error, setError] = useState<string | null>(null)
@@ -58,22 +59,7 @@ export default function FileUploader() {
       </div>
 
       {isUploading && (
-        <div className="mt-4">
-          <div className="flex items-center justify-between mb-1">
-            <span className="text-sm font-medium text-purple-700">
-              Subiendo archivo...
-            </span>
-            <span className="text-sm font-medium text-purple-700">
-              {uploadProgress.toFixed(1)}%
-            </span>
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-2.5">
-            <div
-              className="bg-purple-600 h-2.5 rounded-full transition-all duration-300"
-              style={{ width: `${uploadProgress}%` }}
-            ></div>
-          </div>
-        </div>
+        <ProgressBar label="Subiendo archivo..." progress={uploadProgress} />
       )}
     </div>
   )
