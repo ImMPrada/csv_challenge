@@ -11,12 +11,7 @@ module Chunks
       chunk.chunk_data.attach(chunk_data)
       chunk.save!
 
-      if all_chunks_received?
-        create_csv_upload!
-        @status = :complete
-      else
-        @status = :chunk_received
-      end
+      @status = all_chunks_received? ? :complete : :chunk_received
     end
 
     private
@@ -49,19 +44,6 @@ module Chunks
 
     def all_chunks_received?
       chunk_number == total_chunks
-    end
-
-    def create_csv_upload!
-      @csv_upload = CsvUpload.new(
-        status: :pending,
-        total_rows: 0,
-        processed_rows: 0,
-        failed_rows: 0,
-        error_message: nil
-      )
-
-      csv_upload.file_chunks << chunks
-      csv_upload.save!
     end
 
     def chunks
