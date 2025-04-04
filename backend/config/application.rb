@@ -1,6 +1,7 @@
 require_relative 'boot'
 
 require 'rails/all'
+require 'delayed_job_active_record'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.

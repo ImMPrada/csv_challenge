@@ -40,11 +40,6 @@ rails db:migrate
 rails server
 ```
 
-2. Iniciar el worker de Solid Queue (en una nueva terminal)
-```bash
-rails solid_queue:start
-```
-
 ## Endpoints API
 
 ### Subir un archivo CSV
