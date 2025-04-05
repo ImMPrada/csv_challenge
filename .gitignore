@@ -1,7 +1,6 @@
+# Backend specific ignores
 /backend/.bundle
-
 /backend/.env*
-
 /backend/log/*
 /backend/tmp/*
 !/backend/log/.keep
@@ -21,6 +20,13 @@
 
 # Ignore master key for decrypting credentials and more.
 /backend/config/master.key
+
+# Ignore logs and debug history
+/backend/log/*
+!/backend/log/.keep
+/backend/.byebug_history
+
+# Frontend specific ignores
 # Logs
 /frontend/logs
 /frontend/*.log
@@ -30,16 +36,15 @@
 /frontend/pnpm-debug.log*
 /frontend/lerna-debug.log*
 
+# Dependencies and build files
 /frontend/node_modules
 /frontend/dist
 /frontend/dist-ssr
 /frontend/*.local
 
-/frontend/.vite
-
 # Editor directories and files
 /frontend/.vscode/*
-!.vscode/extensions.json
+!/frontend/.vscode/extensions.json
 /frontend/.idea
 /frontend/.DS_Store
 /frontend/*.suo
@@ -47,3 +52,6 @@
 /frontend/*.njsproj
 /frontend/*.sln
 /frontend/*.sw?
+
+# Vite specific
+/frontend/.vite
