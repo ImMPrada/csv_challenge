@@ -7,11 +7,19 @@ module CsvProcessings
     end
 
     def create!
-      @csv_processing = csv_upload.csv_processing.create!(status: :processing)
+      @csv_processing = csv_upload.csv_processing.create!(status: :started)
     end
 
     def update!(progress:, status:)
       csv_processing.update!(progress:, status:)
+    end
+
+    def restart!(status:)
+      csv_processing.update!(progress: 0, status:)
+    end
+
+    def finish!
+      csv_processing.update!(progress: 100, status: :finished)
     end
 
     private

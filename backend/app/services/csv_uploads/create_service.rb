@@ -25,7 +25,7 @@ module CsvUploads
         total_rows: 0,
         processed_rows: 0,
         failed_rows: 0,
-        error_message: nil
+        error_messages: nil
       )
     end
   end
