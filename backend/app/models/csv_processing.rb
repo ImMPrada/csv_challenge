@@ -5,6 +5,4 @@ class CsvProcessing < ApplicationRecord
 
   validates :status, presence: true
   validates :progress, presence: true
-
-  
 end
