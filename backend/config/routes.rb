@@ -6,7 +6,7 @@ Rails.application.routes.draw do
         get :progress, on: :member
       end
 
-      resources :products, only: [index]
+      resources :products, only: %i[index]
     end
   end
 
