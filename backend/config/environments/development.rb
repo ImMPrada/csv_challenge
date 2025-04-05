@@ -15,6 +15,11 @@ Rails.application.configure do
   # Enable server timing.
   config.server_timing = true
 
+  # Show detailed error information
+  config.action_dispatch.show_exceptions = :all
+  config.action_dispatch.debug_exceptions = true
+  config.action_dispatch.debug_routes = true
+
   # Enable/disable Action Controller caching. By default Action Controller caching is disabled.
   # Run rails dev:cache to toggle Action Controller caching.
   if Rails.root.join('tmp/caching-dev.txt').exist?
