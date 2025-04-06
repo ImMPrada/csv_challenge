@@ -1,12 +1,13 @@
 import { useProducts } from '../../hooks/useProducts';
 import { Link } from 'react-router-dom';
+import { SortButton } from '../sort-button';
 
 const formatPrice = (price: number, rate: number) => {
   return (price * rate).toFixed(2);
 };
 
 export const ProductsList = () => {
-  const { products, isLoading, error, loadMore, hasMore, searchTerm, setSearchTerm } = useProducts();
+  const { products, isLoading, error, loadMore, hasMore, searchTerm, setSearchTerm, handleSort } = useProducts();
 
   if (isLoading) {
     return <div className="p-5 text-gray-600">Loading products...</div>;
@@ -46,14 +47,24 @@ export const ProductsList = () => {
         <table className="w-full border-collapse shadow-lg mb-4">
           <thead>
             <tr className="bg-gray-100">
-              <th className="p-3 text-left border-b-2 border-gray-300">Name</th>
+              <th className="p-3 text-left border-b-2 border-gray-300">
+                <div className="flex items-center space-x-2">
+                  <span>Name</span>
+                  <SortButton onSort={(direction) => handleSort('name', direction)} />
+                </div>
+              </th>
               <th className="p-3 text-center border-b-2 border-gray-300">USD</th>
               <th className="p-3 text-center border-b-2 border-gray-300">EUR</th>
               <th className="p-3 text-center border-b-2 border-gray-300">GBP</th>
               <th className="p-3 text-center border-b-2 border-gray-300">JPY</th>
               <th className="p-3 text-center border-b-2 border-gray-300">CAD</th>
               <th className="p-3 text-center border-b-2 border-gray-300">COP</th>
-              <th className="p-3 text-center border-b-2 border-gray-300">Expiration Date</th>
+              <th className="p-3 text-center border-b-2 border-gray-300">
+                <div className="flex items-center justify-center space-x-2">
+                  <span>Expiration Date</span>
+                  <SortButton onSort={(direction) => handleSort('expiration_date', direction)} />
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>

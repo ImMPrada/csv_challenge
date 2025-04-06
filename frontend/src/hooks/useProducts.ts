@@ -2,6 +2,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { Product } from '../types/product';
 import { config } from '../config';
 
+type SortDirection = 'asc' | 'desc' | null;
+type SortField = 'name' | 'expiration_date';
+
 interface ProductsResponse {
   products: Product[];
   pagy: {
@@ -19,13 +22,20 @@ export const useProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortField, setSortField] = useState<SortField | null>(null);
+  const [sortDirection, setSortDirection] = useState<SortDirection>(null);
 
-  const fetchProducts = useCallback(async (page: number, search: string = '') => {
+  const fetchProducts = useCallback(async (page: number, search: string = '', field: SortField | null = null, direction: SortDirection = null) => {
     try {
       const url = new URL(`${config.apiUrl}/api/v1/products`);
       url.searchParams.append('page', page.toString());
+      
       if (search) {
         url.searchParams.append('name', search);
+      }
+
+      if (field && direction) {
+        url.searchParams.append(`sort_by_${field}`, direction);
       }
 
       const response = await fetch(url.toString());
@@ -62,17 +72,23 @@ export const useProducts = () => {
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
       setCurrentPage(1);
-      fetchProducts(1, searchTerm);
+      fetchProducts(1, searchTerm, sortField, sortDirection);
     }, 1000);
 
     return () => clearTimeout(debounceTimer);
-  }, [searchTerm, fetchProducts]);
+  }, [searchTerm, sortField, sortDirection, fetchProducts]);
 
   const loadMore = async () => {
     const nextPage = currentPage + 1;
     setIsLoading(true);
-    await fetchProducts(nextPage, searchTerm);
+    await fetchProducts(nextPage, searchTerm, sortField, sortDirection);
     setCurrentPage(nextPage);
+  };
+
+  const handleSort = (field: SortField, direction: SortDirection) => {
+    setSortField(field);
+    setSortDirection(direction);
+    setCurrentPage(1);
   };
 
   return { 
@@ -82,6 +98,7 @@ export const useProducts = () => {
     loadMore,
     hasMore: hasNextPage,
     searchTerm,
-    setSearchTerm
+    setSearchTerm,
+    handleSort
   };
 }; 
