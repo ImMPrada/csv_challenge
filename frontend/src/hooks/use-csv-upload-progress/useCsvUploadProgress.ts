@@ -29,7 +29,7 @@ export function useCsvUploadProgress({
         onProgress(data)
       }
       // Only stop polling if processing is complete and exists
-      if (data.csv_processing && (data.csv_processing.status === 'completed' || data.csv_processing.status === 'failed')) {
+      if (data.csv_processing && (data.csv_processing.status === 'completed' || data.csv_processing.status === 'finished')) {
         stopPolling()
       }
     } catch (error) {
