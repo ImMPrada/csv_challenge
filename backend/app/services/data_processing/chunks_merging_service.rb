@@ -1,23 +1,22 @@
+require 'csv'
 module DataProcessing
-  class ProcessService
+  class ChunksMergingService
     attr_reader :tempfile
 
-    def initialize(csv_upload)
+    def initialize(csv_upload, progress_service)
       @csv_upload = csv_upload
+      @progress_service = progress_service
     end
 
     def call!
       progress_service.create!
+      progress_service.update!(progress: 0, status: :merging_chunks)
       merge_chunks_io!
     end
 
     private
 
-    attr_reader :csv_upload
-
-    def progress_service
-      @progress_service ||= CsvProcessings::ProgressService.new(csv_upload)
-    end
+    attr_reader :csv_upload, :progress_service
 
     def chunks
       @chunks ||= csv_upload.file_chunks
@@ -34,7 +33,7 @@ module DataProcessing
         process_chunk!(chunk, count, total_chunks)
       end
 
-      progress_service.update!(progress: 100, status: :completed)
+      progress_service.finish!
       @tempfile.rewind
     end
 
@@ -46,7 +45,10 @@ module DataProcessing
 
     def process_chunk!(chunk, count, total_chunks)
       puts "Processing chunk #{count} of #{total_chunks}"
-      progress_service.update!(progress: (count.to_f / total_chunks * 100).round(2), status: :processing)
+      progress_service.update!(
+        progress: (count.to_f / total_chunks * 100).round(2),
+        status: :merging_chunks
+      )
 
       chunk.chunk_data.open do |downloaded_chunk|
         IO.copy_stream(downloaded_chunk, tempfile)

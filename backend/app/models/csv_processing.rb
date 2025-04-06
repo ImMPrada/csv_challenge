@@ -1,5 +1,13 @@
 class CsvProcessing < ApplicationRecord
-  enum :status, { started: 0, processing: 1, completed: 2, failed: 3 }
+  enum(
+    :status,
+    {
+      started: 0,
+      merging_chunks: 1,
+      creating_products: 2,
+      finished: 3
+    }
+  )
 
   belongs_to :csv_upload
 

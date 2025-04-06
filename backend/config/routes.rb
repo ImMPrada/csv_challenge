@@ -5,6 +5,8 @@ Rails.application.routes.draw do
       resources :csv_uploads, only: [] do
         get :progress, on: :member
       end
+
+      resources :products, only: %i[index]
     end
   end
 
