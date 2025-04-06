@@ -103,7 +103,6 @@ export function useFileUpload({ onUploadComplete, onUploadError, onProgress }: U
     
     try {
       setIsUploading(true)
-      console.log(`Starting upload of ${file.name} in ${totalChunks} chunks`)
 
       for (let chunkNumber = 1; chunkNumber <= totalChunks; chunkNumber++) {
         await processChunk(file, chunkNumber, totalChunks, identifier)

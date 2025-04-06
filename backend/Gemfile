@@ -58,3 +58,5 @@ end
 gem 'cloudinary', '~> 2.3'
 
 gem 'dockerfile-rails', '>= 1.7', group: :development
+
+gem "httpparty", "~> 0.2.0"

@@ -1,4 +1,3 @@
-require 'csv'
 module DataProcessing
   class DataRegisteringService
     attr_reader :tempfile
@@ -7,9 +6,11 @@ module DataProcessing
       @csv_upload = csv_upload
       @tempfile = tempfile
       @progress_service = progress_service
+      @foreign_exchange_service = ForeignExchanges::UpsertService.new
     end
 
     def call!
+      foreign_exchange_service.call!
       extract_file_sections
       csv_upload.update!(status: :processing, processed_rows: total_lines)
       progress_service.restart!(status: :creating_products)
@@ -23,7 +24,8 @@ module DataProcessing
                 :content,
                 :headers,
                 :total_lines,
-                :separator
+                :separator,
+                :foreign_exchange_service
 
     def extract_file_sections
       @content = tempfile.readlines
@@ -39,7 +41,7 @@ module DataProcessing
         count += 1
         begin
           params = product_params(line)
-          Products::CreateService.new(params).call!
+          Products::CreateService.new(params, foreign_exchange_service).call!
           count_success
         rescue StandardError => e
           add_row_error("Error en la linea #{count}: #{e.message} | #{line} |")

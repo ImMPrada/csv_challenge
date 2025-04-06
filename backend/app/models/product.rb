@@ -3,6 +3,8 @@ class Product < ApplicationRecord
   validates :price, numericality: { greater_than: 0 }
   validate :valid_name_format
 
+  belongs_to :foreign_exchange
+
   private
 
   def valid_name_format

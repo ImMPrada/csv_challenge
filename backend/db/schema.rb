@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_05_034745) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_06_213513) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -89,16 +89,27 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_05_034745) do
     t.index ["identifier"], name: "index_file_chunks_on_identifier"
   end
 
+  create_table "foreign_exchanges", force: :cascade do |t|
+    t.date "date", null: false
+    t.json "rates", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["date"], name: "index_foreign_exchanges_on_date"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name", null: false
     t.decimal "price", precision: 10, scale: 2, null: false
     t.date "expiration_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "foreign_exchange_id", null: false
+    t.index ["foreign_exchange_id"], name: "index_products_on_foreign_exchange_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "csv_processings", "csv_uploads"
   add_foreign_key "file_chunks", "csv_uploads"
+  add_foreign_key "products", "foreign_exchanges"
 end
