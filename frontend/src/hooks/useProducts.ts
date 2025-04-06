@@ -15,20 +15,12 @@ export const useProducts = () => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(`${config.apiUrl}/api/v1/products`);
-        
-        // Log the response status and headers
-        console.log('Response status:', response.status);
-        console.log('Response headers:', response.headers);
-        
+
         if (!response.ok) {
-          const errorText = await response.text();
-          console.error('Error response:', errorText);
           throw new Error(`Failed to fetch products: ${response.status} ${response.statusText}`);
         }
-
-        // Log the raw response text for debugging
+        
         const responseText = await response.text();
-        console.log('Raw response:', responseText);
 
         // Try to parse the response
         let data: ProductsResponse;

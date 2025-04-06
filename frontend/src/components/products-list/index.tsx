@@ -30,8 +30,6 @@ export const ProductsList = () => {
     );
   }
 
-  console.log('Products received:', products);
-
   return (
     <div className="p-5">
       <h2 className="mb-5 text-2xl font-semibold text-gray-800">Products</h2>
@@ -57,14 +55,6 @@ export const ProductsList = () => {
               const jpyRate = rates.find(rate => rate.currency === 'jpy')?.rate || 0;
               const cadRate = rates.find(rate => rate.currency === 'cad')?.rate || 0;
               const copRate = rates.find(rate => rate.currency === 'cop')?.rate || 0;
-
-              console.log('Calculated rates:', {
-                eur: eurRate,
-                gbp: gbpRate,
-                jpy: jpyRate,
-                cad: cadRate,
-                cop: copRate
-              });
 
               return (
                 <tr key={product.name} className="border-b border-gray-200 hover:bg-gray-50 transition-colors duration-200">
