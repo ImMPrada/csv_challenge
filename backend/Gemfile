@@ -47,4 +47,8 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem 'byebug', '~> 12.0'
   gem 'rubocop-rails-omakase'
+
+  gem 'dotenv-rails'
 end
+
+gem 'cloudinary', '~> 2.3'
