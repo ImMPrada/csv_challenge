@@ -42,7 +42,7 @@ module DataProcessing
           Products::CreateService.new(params).call!
           count_success
         rescue StandardError => e
-          add_row_error(e.message)
+          add_row_error("Error en la linea #{count}: #{e.message} | #{line} |")
         end
         progress_service.update!(
           progress: (count.to_f / total_lines * 100).round(2),
