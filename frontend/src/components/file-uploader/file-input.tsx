@@ -3,7 +3,7 @@ import { FileInputProps } from './types'
 export default function FileInput({ disabled, onChange }: FileInputProps) {
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg hover:cursor-pointer hover:border-purple transition-colors duration-200">
+    <div className="flex flex-col items-center justify-center w-full min-h-[200px] p-8 border-2 border-dashed border-gray-300 rounded-lg hover:cursor-pointer hover:border-purple transition-colors duration-200">
       <input
         type="file"
         accept=".csv"
@@ -18,7 +18,7 @@ export default function FileInput({ disabled, onChange }: FileInputProps) {
           hover:file:cursor-pointer
           disabled:opacity-50 disabled:cursor-not-allowed"
       />
-      <p className="mt-2 text-sm text-gray-600">
+      <p className="mt-4 text-sm text-gray-600">
         Drag a CSV file here or click to select
       </p>
     </div>

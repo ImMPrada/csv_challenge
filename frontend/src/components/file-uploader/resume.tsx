@@ -1,4 +1,5 @@
 import { ResumeProps } from './types'
+import { Link } from 'react-router-dom'
 
 export default function Resume({
   csvUpload,
@@ -17,6 +18,14 @@ export default function Resume({
           <p>Failed rows: {processingDetails.csv_upload.failed_rows}</p>
         </>
       )}
+      <div className="mt-4">
+        <Link 
+          to="/products" 
+          className="text-purple hover:text-purple-dark hover:cursor-pointer transition-colors duration-200"
+        >
+          View Products →
+        </Link>
+      </div>
     </div>
   )
 }
