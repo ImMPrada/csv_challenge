@@ -1,4 +1,3 @@
-require 'csv'
 module DataProcessing
   class ChunksMergingService
     attr_reader :tempfile
