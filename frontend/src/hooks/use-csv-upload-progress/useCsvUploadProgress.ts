@@ -1,9 +1,10 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { UseCsvUploadProgressProps, UseCsvUploadProgressReturn } from './types'
 import { useRequestErrorHandler } from '../use-request-error-handler'
+import { config } from '../../config'
 
-const DEFAULT_POLLING_INTERVAL = 10 // 0.5 seconds
-const PROGRESS_ENDPOINT = 'http://localhost:3000/api/v1/csv_uploads'
+const DEFAULT_POLLING_INTERVAL = config.pollingInterval
+const PROGRESS_ENDPOINT = `${config.apiUrl}/api/v1/csv_uploads`
 
 export function useCsvUploadProgress({
   onProgress,
