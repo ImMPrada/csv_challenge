@@ -1,6 +1,18 @@
-import { ChangeEventHandler } from 'react'
+import { CsvUpload, CsvUploadProgressResponse } from '../../hooks/use-csv-upload-progress'
 
 export interface FileInputProps {
   disabled: boolean
-  onChange: ChangeEventHandler<HTMLInputElement>
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+export interface PollingStatusProps {
+  isPolling: boolean
+  processingProgress: number
+  processingDetails: CsvUploadProgressResponse | null
+}
+
+export interface ResumeProps {
+  csvUpload: CsvUpload | null
+  isPolling: boolean
+  processingDetails: CsvUploadProgressResponse | null
 }
