@@ -9,7 +9,7 @@ export default function PollingStatus({ isPolling, processingProgress, processin
       <div className="mt-4 p-4 bg-yellow-50 text-yellow-700 rounded-lg">
         <h3 className="font-semibold">PROCESSING QUEUED...</h3>
         <p>The file is queued to be processed. Please wait, this may take a while.</p>
-        <p>Processing consists on create products from the uploaded file.</p>
+        <p>Processing consists of creating products from the uploaded file.</p>
       </div>
     )
   }
@@ -17,7 +17,7 @@ export default function PollingStatus({ isPolling, processingProgress, processin
   return (
     <>
       <ProgressBar 
-        label="Procesando archivo..." 
+        label="Processing file..." 
         progress={processingProgress} 
       />
       {processingDetails && (
