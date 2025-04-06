@@ -2,12 +2,7 @@ import FileUploader from '../../components/file-uploader';
 
 const Upload = () => {
   return (
-    <div className='min-h-screen
-    min-w-screen
-    bg-white-light
-    flex
-    justify-center
-    items-center'>
+    <div className='flex items-center justify-center min-h-[calc(100vh-12rem)]'>
       <FileUploader />
     </div>
   );
