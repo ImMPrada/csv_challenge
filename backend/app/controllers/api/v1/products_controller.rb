@@ -1,6 +1,6 @@
 module Api
   module V1
-    class ChunksController < ApplicationController
+    class ProductsController < ApplicationController
       def index
         @products = Product.all
       end
