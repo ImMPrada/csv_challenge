@@ -11,7 +11,10 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2025_04_05_034745) do
-  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
@@ -21,7 +24,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_05_034745) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "active_storage_blobs", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -33,13 +36,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_05_034745) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "active_storage_variant_records", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "csv_processings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "csv_processings", force: :cascade do |t|
     t.bigint "csv_upload_id", null: false
     t.integer "status", default: 0, null: false
     t.float "progress", default: 0.0, null: false
@@ -48,7 +51,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_05_034745) do
     t.index ["csv_upload_id"], name: "index_csv_processings_on_csv_upload_id"
   end
 
-  create_table "csv_uploads", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "csv_uploads", force: :cascade do |t|
     t.integer "status", null: false
     t.json "error_messages"
     t.integer "total_rows", null: false
@@ -58,7 +61,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_05_034745) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "delayed_jobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "delayed_jobs", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
     t.text "handler", null: false
@@ -73,7 +76,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_05_034745) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
-  create_table "file_chunks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "file_chunks", force: :cascade do |t|
     t.string "identifier", null: false
     t.integer "chunk_number", null: false
     t.integer "total_chunks", null: false
@@ -86,7 +89,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_05_034745) do
     t.index ["identifier"], name: "index_file_chunks_on_identifier"
   end
 
-  create_table "products", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "products", force: :cascade do |t|
     t.string "name", null: false
     t.decimal "price", precision: 10, scale: 2, null: false
     t.date "expiration_date", null: false

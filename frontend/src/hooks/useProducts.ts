@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Product } from '../types/product';
+import { config } from '../config';
 
 interface ProductsResponse {
   products: Product[];
@@ -13,7 +14,7 @@ export const useProducts = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/v1/products');
+        const response = await fetch(`${config.apiUrl}/api/v1/products`);
         
         // Log the response status and headers
         console.log('Response status:', response.status);
