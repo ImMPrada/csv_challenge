@@ -7,3 +7,9 @@ json.products @products do |product|
     json.rates product.foreign_exchange.rates
   end
 end
+
+json.pagy do
+  json.page @pagy.page
+  json.pages @pagy.pages
+  json.count @pagy.count
+end
