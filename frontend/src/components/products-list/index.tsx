@@ -6,7 +6,7 @@ const formatPrice = (price: number, rate: number) => {
 };
 
 export const ProductsList = () => {
-  const { products, isLoading, error } = useProducts();
+  const { products, isLoading, error, loadMore, hasMore } = useProducts();
 
   if (isLoading) {
     return <div className="p-5 text-gray-600">Loading products...</div>;
@@ -34,7 +34,7 @@ export const ProductsList = () => {
     <div className="p-5">
       <h2 className="mb-5 text-2xl font-semibold text-gray-800">Products</h2>
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse shadow-lg">
+        <table className="w-full border-collapse shadow-lg mb-4">
           <thead>
             <tr className="bg-gray-100">
               <th className="p-3 text-left border-b-2 border-gray-300">Name</th>
@@ -71,6 +71,16 @@ export const ProductsList = () => {
             })}
           </tbody>
         </table>
+        {hasMore && (
+          <div className="text-center py-4 bg-gray-50 rounded-lg border border-gray-200">
+            <button
+              onClick={loadMore}
+              className="w-full md:w-auto px-8 py-3 bg-purple text-white rounded-lg hover:bg-purple-dark transition-colors duration-200 font-semibold text-lg shadow-md hover:shadow-lg inline-flex items-center justify-center space-x-2"
+            >
+              <span>Load More Products</span>
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
