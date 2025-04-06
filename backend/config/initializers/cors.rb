@@ -7,12 +7,13 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins '*' # En producción, especifica los dominios permitidos
+    origins ENV.fetch('CORS_ALLOWED_ORIGINS', '').split(',')
 
     resource '*',
              headers: :any,
              methods: %i[get post put patch delete options head],
              expose: %w[Content-Range Content-Length],
-             max_age: 600
+             max_age: 600,
+             credentials: true
   end
 end
