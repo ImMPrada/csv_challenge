@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Product } from '../types/product';
 import { config } from '../config';
 
@@ -18,10 +18,17 @@ export const useProducts = () => {
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const fetchProducts = async (page: number) => {
+  const fetchProducts = useCallback(async (page: number, search: string = '') => {
     try {
-      const response = await fetch(`${config.apiUrl}/api/v1/products?page=${page}`);
+      const url = new URL(`${config.apiUrl}/api/v1/products`);
+      url.searchParams.append('page', page.toString());
+      if (search) {
+        url.searchParams.append('name', search);
+      }
+
+      const response = await fetch(url.toString());
 
       if (!response.ok) {
         throw new Error(`Failed to fetch products: ${response.status} ${response.statusText}`);
@@ -50,16 +57,21 @@ export const useProducts = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    fetchProducts(1);
-  }, []);
+    const debounceTimer = setTimeout(() => {
+      setCurrentPage(1);
+      fetchProducts(1, searchTerm);
+    }, 1000);
+
+    return () => clearTimeout(debounceTimer);
+  }, [searchTerm, fetchProducts]);
 
   const loadMore = async () => {
     const nextPage = currentPage + 1;
     setIsLoading(true);
-    await fetchProducts(nextPage);
+    await fetchProducts(nextPage, searchTerm);
     setCurrentPage(nextPage);
   };
 
@@ -68,6 +80,8 @@ export const useProducts = () => {
     isLoading, 
     error,
     loadMore,
-    hasMore: hasNextPage
+    hasMore: hasNextPage,
+    searchTerm,
+    setSearchTerm
   };
 }; 

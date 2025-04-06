@@ -6,7 +6,7 @@ const formatPrice = (price: number, rate: number) => {
 };
 
 export const ProductsList = () => {
-  const { products, isLoading, error, loadMore, hasMore } = useProducts();
+  const { products, isLoading, error, loadMore, hasMore, searchTerm, setSearchTerm } = useProducts();
 
   if (isLoading) {
     return <div className="p-5 text-gray-600">Loading products...</div>;
@@ -32,7 +32,16 @@ export const ProductsList = () => {
 
   return (
     <div className="p-5">
-      <h2 className="mb-5 text-2xl font-semibold text-gray-800">Products</h2>
+      <div className="flex justify-between items-center mb-5">
+        <h2 className="text-2xl font-semibold text-gray-800">Products</h2>
+        <input
+          type="text"
+          placeholder="Search by name..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent"
+        />
+      </div>
       <div className="overflow-x-auto">
         <table className="w-full border-collapse shadow-lg mb-4">
           <thead>

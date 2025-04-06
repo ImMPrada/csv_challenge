@@ -5,6 +5,8 @@ class Product < ApplicationRecord
 
   belongs_to :foreign_exchange
 
+  scope :by_name, ->(name) { where('name ILIKE ?', "%#{name}%") }
+
   private
 
   def valid_name_format

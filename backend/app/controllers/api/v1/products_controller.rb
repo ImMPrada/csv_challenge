@@ -4,6 +4,7 @@ module Api
       include Pagy::Backend
 
       def index
+        apply_filters
         @pagy, @products = pagy(scope)
       end
 
@@ -11,6 +12,18 @@ module Api
 
       def scope
         @scope ||= Product.all
+      end
+
+      def filter_params
+        %w[name]
+      end
+
+      def apply_filters
+        filter_params.each do |param|
+          next if params[param].blank?
+
+          @scope = scope.send("by_#{param}", params[param])
+        end
       end
     end
   end
