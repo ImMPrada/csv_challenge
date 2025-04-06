@@ -1,6 +1,6 @@
 # Backend specific ignores
 /backend/.bundle
-/backend/.env*
+/backend/.env
 /backend/log/*
 /backend/tmp/*
 !/backend/log/.keep
