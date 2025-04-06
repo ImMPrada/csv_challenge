@@ -4,7 +4,7 @@ export interface CsvUpload {
   total_rows: number
   processed_rows: number
   failed_rows: number
-  error_message: string | null
+  error_messages: string | null
 }
 
 export interface CsvProcessing {

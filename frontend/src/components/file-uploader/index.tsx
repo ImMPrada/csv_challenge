@@ -18,7 +18,7 @@ export default function FileUploader() {
       setProcessingDetails(progress)
       if (progress.csv_processing) {
         setProcessingProgress(progress.csv_processing.progress)
-        if (progress.csv_processing.status === 'completed' || progress.csv_processing.status === 'failed') {
+        if (progress.csv_processing.status === 'completed' || progress.csv_processing.status === 'finished') {
           stopPolling()
         }
       } else {
@@ -71,7 +71,7 @@ export default function FileUploader() {
   return (
     <div className="w-full max-w-2xl p-4 border border-purple rounded-lg">
       {error && (
-        <div className="mb-4 p-4 bg-red-100 text-red-700 rounded-lg">
+        <div className="mb-4 p-4 text-red rounded-lg">
           {error}
         </div>
       )}
@@ -82,7 +82,7 @@ export default function FileUploader() {
       />
 
       {isUploading && (
-        <ProgressBar label="Subiendo archivo..." progress={uploadProgress} />
+        <ProgressBar label="Uploading file..." progress={uploadProgress} />
       )}
 
       <PollingStatus
@@ -91,11 +91,14 @@ export default function FileUploader() {
         processingDetails={processingDetails}
       />
 
-      <Resume
-        csvUpload={csvUpload}
-        isPolling={isPolling}
-        processingDetails={processingDetails}
-      />
+      {
+        !csvUpload || isPolling ? null : (
+          <Resume
+            csvUpload={csvUpload}
+            processingDetails={processingDetails}
+          />
+        )
+      }
     </div>
   )
 }

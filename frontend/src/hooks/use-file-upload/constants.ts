@@ -1,2 +1,4 @@
-export const CHUNK_SIZE = 1024 * 1024 // 1MB chunks
-export const ENDPOINT = 'http://localhost:3000/api/v1/chunks' 
+import { config } from '../../config'
+
+export const CHUNK_SIZE = config.chunkSize
+export const ENDPOINT = `${config.apiUrl}/api/v1/chunks` 

@@ -12,7 +12,6 @@ export interface PollingStatusProps {
 }
 
 export interface ResumeProps {
-  csvUpload: CsvUpload | null
-  isPolling: boolean
+  csvUpload: CsvUpload
   processingDetails: CsvUploadProgressResponse | null
 }

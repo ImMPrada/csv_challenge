@@ -55,3 +55,6 @@
 
 # Vite specific
 /frontend/.vite
+
+# Environment variables
+/frontend/.env
