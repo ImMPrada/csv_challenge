@@ -6,47 +6,68 @@
 
 The system is designed to handle CSV file uploads efficiently and securely, with the following features:
 
-- Size limit: 100MB
-- Allowed file types: CSV and Excel
+- Supported file types: CSV
 - Asynchronous processing
-- Security validations
 - CORS support
+- Required CSV fields: name, price, expiration_date
+- Supports both comma (,) and semicolon (;) as separators
 
 ### Upload Flow
 
-1. **Frontend → Backend (Upload Initiation)**
-   ```javascript
-   // Frontend implementation example
-   const uploadFile = async (file) => {
-     const formData = new FormData();
-     formData.append('csv_upload[file]', file);
+1. **Chunk Processing**:
+   - The frontend divides the CSV file into 1MB chunks
+   - Each chunk is transmitted to a dedicated POST endpoint
 
-     try {
-       const response = await fetch('/api/v1/csv_uploads', {
-         method: 'POST',
-         body: formData
-       });
+2. **Storage & Processing**:
+   - Chunks are stored using Active Storage
+   - A background job merges the chunks into a temporary file
+   - The system processes the temporary file to extract product data
+   - Each product is validated and stored in the database
 
-       if (!response.ok) {
-         const error = await response.json();
-         throw new Error(error.error);
-       }
+This architecture ensures reliable and efficient handling of large CSV files while maintaining data integrity.
 
-       const data = await response.json();
-       return data;
-     } catch (error) {
-       console.error('Error uploading file:', error);
-       throw error;
-     }
-   };
-   ```
+## How to deploy
 
-2. **Initial Validations (Backend)**
-   - Verifies that a file was provided
-   - Validates maximum size (100MB)
-   - Checks content type (CSV or Excel)
+1. Clone the repository
 
-3. **File Processing**
-   - File is attached using Active Storage
-   - Total CSV rows are counted efficiently
-   - Initial record is created in the database
+```bash
+git clone https://github.com/ImMPrada/csv_challenge.git
+```
+
+you need an .env file to run the server
+
+```bash
+cp .env.example .env
+```
+
+You need postgres installed and running
+
+2. Install dependencies
+
+```bash
+bundle install
+```
+
+3. Run migrations
+
+```bash
+rails db:migrate
+```
+
+4. Run the server
+
+```bash
+rails s
+```
+
+5. Run the jobs
+
+```bash
+rails jobs:work
+```
+
+## What is being used
+
+- Rails 8
+- Active Storage
+- Active Job: Delayed Job

@@ -12,6 +12,8 @@ The products should be stored along with multiple exchange rates at the time of 
 Implement an endpoint that returns all the processed rows of product data along with the available currency conversions stored at the time of the upload. This endpoint should support filtering and sorting based on the name, price, and expiration fields
 The application should support CSV files with up to 200k rows, but easily scale to support more.
 
+For more information on the backend implementation, please refer to the [Backend README](backend/README.md).
+
 ### Frontend
 
 The front-end should display a file upload input that allows the user to select a CSV file from their device.
