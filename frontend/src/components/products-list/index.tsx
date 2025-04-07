@@ -1,7 +1,8 @@
 import { useProducts } from '../../hooks/useProducts';
-import { Link } from 'react-router-dom';
 import { SortButton } from '../sort-button';
-
+import { NameSearch } from './name-search';
+import { NoProductsMessage } from './no-products-message';
+import { ShowMoreButton } from './show-more-button';
 const formatPrice = (price: number, rate: number) => {
   return (price * rate).toFixed(2);
 };
@@ -18,31 +19,13 @@ export const ProductsList = () => {
   }
 
   if (products.length === 0) {
-    return (
-      <div className="p-5 text-center">
-        <p className="mb-4 text-gray-600">No products available.</p>
-        <Link 
-          to="/upload" 
-          className="text-purple hover:text-purple-dark hover:cursor-pointer transition-colors duration-200"
-        >
-          Upload products
-        </Link>
-      </div>
-    );
+    return <NoProductsMessage />
   }
 
   return (
     <div className="p-5">
-      <div className="flex justify-between items-center mb-5">
-        <h2 className="text-2xl font-semibold text-gray-800">Products</h2>
-        <input
-          type="text"
-          placeholder="Search by name..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent"
-        />
-      </div>
+      <NameSearch value={searchTerm} onChange={setSearchTerm} />
+
       <div className="overflow-x-auto">
         <table className="w-full border-collapse shadow-lg mb-4">
           <thead>
@@ -91,15 +74,9 @@ export const ProductsList = () => {
             })}
           </tbody>
         </table>
+
         {hasMore && (
-          <div className="text-center py-4 bg-gray-50 rounded-lg border border-gray-200">
-            <button
-              onClick={loadMore}
-              className="w-full md:w-auto px-8 py-3 bg-purple text-white rounded-lg hover:bg-purple-dark transition-colors duration-200 font-semibold text-lg shadow-md hover:shadow-lg inline-flex items-center justify-center space-x-2"
-            >
-              <span>Load More Products</span>
-            </button>
-          </div>
+          <ShowMoreButton onClick={loadMore} />
         )}
       </div>
     </div>
